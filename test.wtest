@@ -1,10 +1,24 @@
+import personas.*
 import golosinas.*
-import mariano.*
 
-describe "group of tests" {
 
-  test "test 1" {
-    assert.equals(100, 50+50)
+describe "group of tests de personas" {
+    const mariano = new Persona()
+    const unBombon = new Bombon()
+    const unAlfa = new Alfajor()
+    const tutiGluten = new Tuttifrutti(libreDeGluten = false)
+    const tutiSinGluten = new Tuttifrutti(libreDeGluten = true)
+    const unChupetin = new Chupetin()
+
+  test "sabores faltantes" {
+    mariano.comprarVarias([unBombon, unAlfa])
+    assert.equals([vainilla], mariano.saboresDeseados([vainilla, frutilla, chocolate]))
+
+  }
+
+  test "golosina mas cara" {
+    mariano.comprarVarias([tutiGluten, tutiSinGluten, unChupetin])
+    assert.equals(tutiSinGluten, mariano.golosinaMasCara())
   }
 
 }

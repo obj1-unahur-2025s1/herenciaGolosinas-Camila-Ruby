@@ -11,50 +11,64 @@ object limon { }
 /*
  * Golosinas
  */
-class Bombon {
+class Golosina {
 	var peso = 15
+	var libreGluten = true
+	method peso()= peso
+	method libreGluten() = libreGluten
+	method calcularEspacio(estanteria) = peso + 25 < estanteria
+}
+
+class Bombon inherits Golosina{
 	
+
 	method precio() { return 5 }
-	method peso() { return peso }
 	method mordisco() { peso = peso * 0.8 - 1 }
 	method sabor() { return frutilla }
-	method libreGluten() { return true }
+}
+
+class BombonDuro inherits Bombon{
+	override method mordisco(){ peso -=1}
+	method gradoDeDureza()= if (peso >12) 3 else (if (peso.between(8, 12)) 2 else 1)
+
 }
 
 
-class Alfajor {
-	var peso = 15
+class Alfajor inherits Golosina(libreGluten = false){
+
 	
 	method precio() { return 12 }
-	method peso() { return peso }
 	method mordisco() { peso = peso * 0.8 }
 	method sabor() { return chocolate }
-	method libreGluten() { return false }
 }
 
-class Caramelo {
-	var peso = 5
-
-	method precio() { return 12 }
-	method peso() { return peso }
-	method mordisco() { peso = peso - 1 }
-	method sabor() { return frutilla }
-	method libreGluten() { return true }
-}
-
-
-class Chupetin {
-	var peso = 7
+class Caramelo inherits Golosina(peso = 5){
 	
+	var property sabor = frutilla
+	method precio() { return 12 }
+	method mordisco() { peso = peso - 1 }
+}
+
+class CarameloCorazonChoco inherits Caramelo{
+	
+	override method precio() = super() +1
+	override method mordisco() {
+		super()
+		sabor = chocolate
+
+	}
+}
+
+
+
+class Chupetin inherits Golosina(peso = 7){
 	method precio() { return 2 }
-	method peso() { return peso }
 	method mordisco() { 
 		if (peso >= 2) {
 			peso = peso * 0.9
 		}
 	}
 	method sabor() { return naranja }
-	method libreGluten() { return true }
 }
 
 class Oblea {
@@ -68,11 +82,22 @@ class Oblea {
 			peso = peso * 0.5
 		} else { 
 			// pierde el 25% del peso
-			peso = peso - (peso * 0.25)
+			peso = peso * 0.75
 		}
+
+		//peso = peso * (1- if peso >= 70 0.5 else 0.75)
 	}	
 	method sabor() { return vainilla }
 	method libreGluten() { return false }
+}
+
+class ObleaCrujiente inherits Oblea{
+	var cantMordiscos = 0
+	override method mordisco(){
+		super()
+		if(cantMordiscos <= 3) peso -=3 
+	}
+	method estaDebil() = cantMordiscos > 3
 }
 
 class Chocolatin {
