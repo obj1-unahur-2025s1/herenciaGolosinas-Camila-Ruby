@@ -65,3 +65,8 @@ class Persona {
 		return golosinas.any({golosina => golosina.sabor() == unSabor})
 	}
 }
+
+
+object heladera {
+  var property humedad = 0
+}

@@ -1,3 +1,4 @@
+import personas.*
 /*
  * Los sabores
  */
@@ -96,6 +97,7 @@ class ObleaCrujiente inherits Oblea{
 	override method mordisco(){
 		super()
 		if(cantMordiscos <= 3) peso -=3 
+		cantMordiscos += 1
 	}
 	method estaDebil() = cantMordiscos > 3
 }
@@ -114,6 +116,16 @@ class Chocolatin {
 	method sabor() { return chocolate }
 	method libreGluten() { return false }
 
+}
+class ChocolatinVip inherits Chocolatin{
+	method humedad() = heladera.humedad() 
+	override method peso(){
+		return super() * (1 + self.humedad())
+	}
+}
+class ChocolatinPremium inherits ChocolatinVip{
+	override method humedad() = super() * 0.5
+	
 }
 
 class GolosinaBaniada {
